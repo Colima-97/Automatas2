@@ -44,6 +44,17 @@ def searchItem(searching):
         print('Item not found')    
 
 #-------------------------------------------------------
+#Modify Item
+#-------------------------------------------------------
+def modifyItem(mod, newItem):
+    if mod in myList:
+        index = myList.index(mod)
+        myList[index] = mod
+        print('The item (',mod,')[',index,'] was replaced successfully by (',newItem,')')
+    else:
+        myList.append(newItem)
+        print('(',mod,') not found')        
+#-------------------------------------------------------
 #Main mathod
 #-------------------------------------------------------
 def main():  
@@ -72,14 +83,20 @@ def main():
             searchItem(searching)
         elif(opc == 3):
             #Modify
-            modify = input('Insert an item that you want to modify: ')
-            modifyItem(modify)
+            modify = input('Insert the item that you want to modify: ')
+            newItem = input('Insert the new item: ')
+            modifyItem(modify, newItem)
         elif(opc == 4):
             #Delete
             deleting = input('Insert an item that you want to delete: ')
             removeItem(deleting)
         #Need to end this shit later
-
+        elif(opc == 5):
+            #Print
+            printList()
+        else:
+            #None
+            print('Option ',opc,' not found!')
         #Almost the end
         if(opc == 0):
             resp = 'N'            

@@ -1,0 +1,5 @@
+-Insert data
+-Seek data
+-Delete data
+-Update data
+-Show data (The whole data)

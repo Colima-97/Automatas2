@@ -197,7 +197,7 @@
               <item>
                <layout class="QGridLayout" name="gridLayout_5">
                 <item row="0" column="0">
-                 <widget class="QTableWidget" name="tableWidget_2">
+                 <widget class="QTableWidget" name="table_insert">
                   <property name="cornerButtonEnabled">
                    <bool>false</bool>
                   </property>

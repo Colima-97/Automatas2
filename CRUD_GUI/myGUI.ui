@@ -143,12 +143,21 @@
                      </widget>
                     </item>
                     <item>
-                     <widget class="QComboBox" name="show_cb">
+                     <widget class="QComboBox" name="tables_cb">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
+                      </property>
+                      <property name="currentText">
+                       <string/>
+                      </property>
+                      <property name="currentIndex">
+                       <number>-1</number>
+                      </property>
+                      <property name="maxVisibleItems">
+                       <number>10</number>
                       </property>
                      </widget>
                     </item>
@@ -220,7 +229,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QComboBox" name="insert_cb">
+                 <widget class="QComboBox" name="tables_cb1">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                     <horstretch>0</horstretch>

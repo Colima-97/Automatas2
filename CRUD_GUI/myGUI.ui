@@ -89,7 +89,7 @@
        <item row="0" column="0">
         <widget class="QTabWidget" name="tabWidget">
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="show_tab">
           <attribute name="title">
@@ -106,8 +106,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>716</width>
-                <height>432</height>
+                <width>734</width>
+                <height>475</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="gridLayout_8">
@@ -149,6 +149,13 @@
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>14</pointsize>
+                        <weight>50</weight>
+                        <bold>false</bold>
+                       </font>
                       </property>
                       <property name="currentText">
                        <string/>
@@ -235,6 +242,11 @@
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>14</pointsize>
+                   </font>
                   </property>
                  </widget>
                 </item>

@@ -20,7 +20,10 @@ class Db_GUI(QMainWindow):
             message = 'La conexión falló!'            
             self.tabWidget.setEnabled(False)
         finally:
-            self.status_label.setText(message) 
+            self.status_label.setText(message)
+
+    def fn_create(self):
+
 
 
 def main():    

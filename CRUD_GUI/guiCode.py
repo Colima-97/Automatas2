@@ -9,14 +9,18 @@ class Db_GUI(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi("myGUI.ui", self)
-        #Defining variables
+        #Defining variables and flags
         self.strError = 'Ocurrió un error'
         self.strOK = 'Todo marcha sobre ruedas'
         self.comboBox1Flag = False #It means that comboBox1 hasn't been filled
-        self.comboBox2Flag = False #It means that comboBox1 hasn't been filled
+        self.comboBox2Flag = False #It means that comboBox2 hasn't been filled        
         #Filling comboBox        
-        self.fn_comboBox_fill()        
+        self.fn_comboBox_fill()      
+        #Listeners for changes  
         self.tabWidget.currentChanged.connect(self.fn_comboBox_fill)
+        self.tables_cb1.currentIndexChanged.connect(self.fn_showInsertColumns)
+        #Firstly operations
+        self.tabWidget.setCurrentIndex(0)
         #Buttons clicked
         self.show_btn.clicked.connect(self.fn_show)
         #self.insert_btn.clicked.connect(self.fn_insert)
@@ -66,7 +70,9 @@ class Db_GUI(QMainWindow):
                 self.comboBox2Flag = True
                 for row in tables:
                     table = row[0]
-                    self.tables_cb1.addItem(table)                 
+                    self.tables_cb1.addItem(table) 
+
+                self.fn_showInsertColumns()                 
             else:
                 print('It has been already filled!')
 
@@ -75,32 +81,26 @@ class Db_GUI(QMainWindow):
             db = self.conection()
             cursor = db.cursor()
             cursor2 = db.cursor()
-
-            #El índice donde está el usuario en el TabWidget
-            index = self.tabWidget.currentIndex()
-            if (index == 0):
-                actualTable = self.tables_cb.currentText()
-            else:                
-                actualTable = self.tables_cb1.currentText()
-            #Cadena para búsqueda SQL
-            sqlColumns = 'show columns from {0}'.format(actualTable) #Conocer las columnas
+             
+            #SQL Queries
+            actualTable = self.tables_cb.currentText()
+            sqlColumns = 'show columns from {0}'.format(actualTable) #Knowing the columns' name
             sqlSearch = 'select * from {0};'.format(actualTable)                            
             cursor.execute(sqlColumns)
             cursor2.execute(sqlSearch)            
             resultado = cursor.fetchall()
             resultado2 = cursor2.fetchall()
+
+            #Num of columns
             lon = (len(resultado))
-            #counter = 0
             self.table_show.setRowCount(0)
             self.table_show.setColumnCount(lon)
             column_array = []
             for column in resultado:
                 columnName = column[0]                
-                #Poner el nombre en el label de la columna
-                #self.table_insert.setHorizontalHeaderItem(counter, self.table_insert).setText(columnName)
-                column_array.append(columnName)
-                #couter += 1
-            
+                #Adding the name of the column into an array
+                column_array.append(columnName)                
+            #Setting all columns with an array
             self.table_show.setHorizontalHeaderLabels(column_array)
 
             for fila_num, fila_dato in enumerate(resultado2):
@@ -116,7 +116,37 @@ class Db_GUI(QMainWindow):
         finally:
             db.close()
 
-    #def fn_insert(self):
+    def fn_showInsertColumns(self):
+        try:
+            db = self.conection()
+            cursor = db.cursor()
+
+            #SQL Queries
+            actualTable = self.tables_cb1.currentText()
+            sqlColumns = 'show columns from {0}'.format(actualTable) #Knowing the columns' name
+            
+            cursor.execute(sqlColumns)
+            resultado = cursor.fetchall()
+
+            #Num of columns
+            lon = (len(resultado))
+            self.table_insert.setRowCount(1)
+            self.table_insert.setColumnCount(lon)
+            column_array = []
+            for column in resultado:
+                columnName = column[0]                
+                #Adding the name of the column into an array
+                column_array.append(columnName)                
+            #Setting all columns with an array
+            self.table_insert.setHorizontalHeaderLabels(column_array)
+
+            self.status_label.setText(self.strOK)
+            cursor.close()
+        except:
+            self.status_label.setText(self.strError)
+        finally:
+            db.close()
+
 
 
             

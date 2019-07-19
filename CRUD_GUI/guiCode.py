@@ -1,7 +1,7 @@
 import sys
 import pymysql
-from PyQt5 import uic
-from PyQt5.QtWidgets import QMainWindow, QApplication
+from PyQt5 import uic, QtWidgets
+from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QTableWidget, QTableWidgetItem
 
 class Db_GUI(QMainWindow):
    
@@ -16,8 +16,8 @@ class Db_GUI(QMainWindow):
         self.fn_comboBox_fill()        
         self.tabWidget.currentChanged.connect(self.fn_comboBox_fill)
         #Buttons clicked
-        self.show_button.clicked.connect(self.fn_show)
-        #self.insert_button.clicked.connect(self.fn_insert)
+        self.show_btn.clicked.connect(self.fn_show)
+        #self.insert_btn.clicked.connect(self.fn_insert)
 
     #Conexión
     def conection(self):
@@ -79,24 +79,29 @@ class Db_GUI(QMainWindow):
                 actualTable = self.tables_cb1.currentText()
             #Cadena para búsqueda SQL
             sqlColumns = 'show columns from {0}'.format(actualTable) #Conocer las columnas
-            sqlSearch = 'select * from {0};'.formart(actualTable)                            
+            sqlSearch = 'select * from {0};'.format(actualTable)                            
             cursor.execute(sqlColumns)
             cursor2.execute(sqlSearch)            
             resultado = cursor.fetchall()
             resultado2 = cursor2.fetchall()
-            
-            counter = 0
-            self.table_insert.setRowCount(0)
+            lon = (len(resultado))
+            #counter = 0
+            self.table_show.setRowCount(0)
+            self.table_show.setColumnCount(lon)
+            column_array = []
             for column in resultado:
                 columnName = column[0]                
                 #Poner el nombre en el label de la columna
-                self.table_insert.setHorizontalHeaderItem(counter).setText(columnName)
-                couter += 1
+                #self.table_insert.setHorizontalHeaderItem(counter, self.table_insert).setText(columnName)
+                column_array.append(columnName)
+                #couter += 1
             
+            self.table_show.setHorizontalHeaderLabels(column_array)
+
             for fila_num, fila_dato in enumerate(resultado2):
-                    self.table_insert.insertRow(fila_num)
+                    self.table_show.insertRow(fila_num)
                     for col_num, dato in enumerate(fila_dato):
-                        self.table_insert.setItem(fila_num, col_num, QtWidgets.QtableWidgetItem(str(dato)))
+                        self.table_show.setItem(fila_num, col_num, QtWidgets.QTableWidgetItem(str(dato)))
 
             self.status_label.setText(self.strOK)
             cursor.close()

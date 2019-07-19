@@ -12,6 +12,8 @@ class Db_GUI(QMainWindow):
         #Defining variables
         self.strError = 'Ocurrió un error'
         self.strOK = 'Todo marcha sobre ruedas'
+        self.comboBox1Flag = False #It means that comboBox1 hasn't been filled
+        self.comboBox2Flag = False #It means that comboBox1 hasn't been filled
         #Filling comboBox        
         self.fn_comboBox_fill()        
         self.tabWidget.currentChanged.connect(self.fn_comboBox_fill)
@@ -53,17 +55,20 @@ class Db_GUI(QMainWindow):
             #El índice donde está el usuario en el TabWidget
             index = self.tabWidget.currentIndex()
 
-            if(index == 0):
+            if(index == 0 and self.comboBox1Flag != True):
                 #self.tables_cb() ComboBox 1
+                self.comboBox1Flag = True
                 for row in tables:
                     table = row[0]
                     self.tables_cb.addItem(table)                 
-
-            else:
+            elif (index == 1 and self.comboBox2Flag != True):
                 #self.tables_cb1() ComboBox 2
+                self.comboBox2Flag = True
                 for row in tables:
                     table = row[0]
                     self.tables_cb1.addItem(table)                 
+            else:
+                print('It has been already filled!')
 
     def fn_show(self):
         try:
